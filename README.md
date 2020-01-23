@@ -23,7 +23,11 @@ Fork from https://github.com/urcomputeringpal/actions-docker
 - Create a Secret on your repository named `GCLOUD_SERVICE_ACCOUNT_KEY` (Settings > Secrets) with the contents of:
 
 ```shell
+# Linux
 cat path-to/key.json | base64 -w 0
+
+# MacOS
+cat path-to/key.json | base64 -b 0
 ```
 
 - That's it! The GitHub Actions in this repository read this Secret and provide the correct values to the Docker daemon by default if present. If a Secret isn't present, `build` _may_ succeed but `push` will return an error!
