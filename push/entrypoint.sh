@@ -6,7 +6,7 @@ set -e
 : ${IMAGE:=$GITHUB_REPOSITORY}
 : ${TAG:=$GITHUB_SHA}
 : ${DEFAULT_BRANCH_TAG:=true}
-: ${LATEST:=false}
+: ${LATEST:=true}
 
 if [ -n "${GCLOUD_SERVICE_ACCOUNT_KEY}" ]; then
   echo "Logging into gcr.io with GCLOUD_SERVICE_ACCOUNT_KEY..."

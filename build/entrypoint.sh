@@ -7,14 +7,13 @@ set -e
 : ${ARGS:=} # Default: empty build args
 : ${TAG:=$GITHUB_SHA}
 : ${DEFAULT_BRANCH_TAG:=true}
-: ${LATEST:=false}
+: ${LATEST:=true}
 
 docker build $ARGS -t $IMAGE:$TAG .
 docker tag $IMAGE:$TAG $GCLOUD_REGISTRY/$IMAGE:$TAG
 
 if [ $LATEST = true ]; then
-  docker build $ARGS -t $IMAGE:latest .
-  docker tag $IMAGE:latest $GCLOUD_REGISTRY/$IMAGE:latest
+  docker tag $IMAGE:$TAG $GCLOUD_REGISTRY/$IMAGE:latest
 fi
 
 if [ "$DEFAULT_BRANCH_TAG" = "true" ]; then
