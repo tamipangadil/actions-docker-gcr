@@ -2,6 +2,7 @@
 
 set -e
 
+: ${WORKDIR:=.}
 : ${GCLOUD_REGISTRY:=gcr.io}
 : ${IMAGE:=$GITHUB_REPOSITORY}
 : ${ARGS:=} # Default: empty build args
@@ -9,7 +10,7 @@ set -e
 : ${DEFAULT_BRANCH_TAG:=true}
 : ${LATEST:=true}
 
-docker build $ARGS -t $IMAGE:$TAG .
+docker build $ARGS -t $IMAGE:$TAG $WORKDIR
 docker tag $IMAGE:$TAG $GCLOUD_REGISTRY/$IMAGE:$TAG
 
 if [ $LATEST = true ]; then
