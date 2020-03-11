@@ -1,0 +1,23 @@
+name: 'Actions Docker GCR'
+description: 'Dockerize your project and upload to your GCR'
+author: 'Tami Pangadil'
+inputs:
+  GCLOUD_REGISTRY:
+    description: 'Your Gcloud registry'
+    required: true
+  GITHUB_REPOSITORY:
+    description: '(Optional) Your GitHub repository'
+    required: false
+  IMAGE:
+    description: 'Desired Docker image name'
+    required: true
+  LATEST:
+    description: 'Tag it as `latest`'
+    required: false
+    default: true
+  TAG:
+    description: 'Custom tag instead of using the latest'
+    required: false
+runs:
+  using: 'openjdk:jre-alpine'
+  main: target/docker/stage/opt/docker/bin/cin-project-survey'
