@@ -14,10 +14,9 @@ inputs:
   LATEST:
     description: 'Tag it as `latest`'
     required: false
-    default: true
   TAG:
     description: 'Custom tag instead of using the latest'
     required: false
 runs:
-  using: 'openjdk:jre-alpine'
-  main: target/docker/stage/opt/docker/bin/cin-project-survey'
+  using: "docker"
+  image: "openjdk:jre-alpine"
