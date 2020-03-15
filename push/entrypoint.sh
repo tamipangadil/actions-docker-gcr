@@ -5,8 +5,10 @@ set -e
 : ${GCLOUD_REGISTRY:=gcr.io}
 : ${IMAGE:=$GITHUB_REPOSITORY}
 : ${TAG:=$GITHUB_SHA}
+: ${HEAD_TAG:=${GITHUB_REF/refs\/tags\//}}
 : ${DEFAULT_BRANCH_TAG:=true}
-: ${LATEST:=true}
+: ${TAG_AS_LATEST:=true}
+: ${TAG_AS_GITHUB_TAG:=false}
 
 if [ -n "${GCLOUD_SERVICE_ACCOUNT_KEY}" ]; then
   echo "Logging into gcr.io with GCLOUD_SERVICE_ACCOUNT_KEY..."
@@ -19,6 +21,10 @@ fi
 
 docker push $GCLOUD_REGISTRY/$IMAGE:$TAG
 
-if [ $LATEST = true ]; then
+if [ $TAG_AS_LATEST = true ]; then
   docker push $GCLOUD_REGISTRY/$IMAGE:latest
+fi
+
+if [ $TAG_AS_GITHUB_TAG = true ]; then
+  docker push $GCLOUD_REGISTRY/$IMAGE:$HEAD_TAG
 fi
