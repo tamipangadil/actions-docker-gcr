@@ -10,7 +10,14 @@ Fork from https://github.com/urcomputeringpal/actions-docker
 - `IMAGE=$GITHUB_REPOSITORY`
   - (Expects a Google Cloud Project named after your GitHub username)
 - `TAG=$GITHUB_SHA`
+- `LATEST=true`
+- `TAG_AS_GITHUB_TAG=false`
+- `ARGS=left empty`
+  - Add more docker build args
+  - `--build-arg arg1=test1 --build-arg arg2=test2`
 - `DEFAULT_BRANCH_TAG=true`
+- `WORKDIR=.`
+  - Custom directory that has the project `Dockerfile`
 
 ## Usage
 
@@ -49,15 +56,15 @@ jobs:
       - uses: actions/checkout@v1
 
       - name: Docker Build
-        uses: benjlevesque/actions-docker-gcr/build@master
+        uses: tamipangadil/actions-docker-gcr/build@master
 
       - name: Docker Push
-        uses: benjlevesque/actions-docker-gcr/push@master
+        uses: tamipangadil/actions-docker-gcr/push@master
         env:
           GCLOUD_SERVICE_ACCOUNT_KEY: ${{ secrets.GCLOUD_SERVICE_ACCOUNT_KEY }}
 ```
 
-### Specify a different Registry, Project & image name
+### Specify a different Registry, Project & image name, and other environment variables
 
 ```yaml
     [...]
@@ -65,15 +72,21 @@ jobs:
       - uses: actions/checkout@v1
 
       - name: Docker Build
-        uses: benjlevesque/actions-docker-gcr/build@master
+        uses: tamipangadil/actions-docker-gcr/build@master
         env:
           IMAGE: my-project/my-image
           GCLOUD_REGISTRY: eu.gcr.io
+          LATEST: false
+          ARGS: ""
+          WORKDIR: path/to/custom/directory
+          TAG: "v1.0"
 
       - name: Docker Push
-        uses: benjlevesque/actions-docker-gcr/push@master
+        uses: tamipangadil/actions-docker-gcr/push@master
         env:
           IMAGE: my-project/my-image
           GCLOUD_REGISTRY: eu.gcr.io
           GCLOUD_SERVICE_ACCOUNT_KEY: ${{ secrets.GCLOUD_SERVICE_ACCOUNT_KEY }}
+          LATEST: false
+          TAG: "v1.0"
 ```
