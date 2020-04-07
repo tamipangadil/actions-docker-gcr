@@ -24,7 +24,7 @@ if [ "$DEFAULT_BRANCH_TAG" = "true" ]; then
   if [ "$BRANCH" = "master" ]; then # TODO
     docker tag $IMAGE:$TAG $GCLOUD_REGISTRY/$IMAGE:$BRANCH
     # Override: Allow to tag as latest
-    $LATEST = true
+    LATEST=true
   fi
 fi
 

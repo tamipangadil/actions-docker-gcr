@@ -30,7 +30,7 @@ if [ "$DEFAULT_BRANCH_TAG" = "true" ]; then
   if [ "$BRANCH" = "master" ]; then # TODO
     docker push $GCLOUD_REGISTRY/$IMAGE:$BRANCH
     # Override: Allow to push the Latest tag too
-    $LATEST = true
+    LATEST=true
   fi
 fi
 
