@@ -21,10 +21,19 @@ fi
 
 docker push $GCLOUD_REGISTRY/$IMAGE:$TAG
 
-if [ $LATEST = true ]; then
-  docker push $GCLOUD_REGISTRY/$IMAGE:latest
-fi
-
 if [ $TAG_AS_GITHUB_TAG = true ]; then
   docker push $GCLOUD_REGISTRY/$IMAGE:$HEAD_TAG
+fi
+
+if [ "$DEFAULT_BRANCH_TAG" = "true" ]; then
+  BRANCH=$(echo $GITHUB_REF | rev | cut -f 1 -d / | rev)
+  if [ "$BRANCH" = "master" ]; then # TODO
+    docker push $GCLOUD_REGISTRY/$IMAGE:$BRANCH
+    # Override: Allow to push the Latest tag too
+    $LATEST = true
+  fi
+fi
+
+if [ $LATEST = true ]; then
+  docker push $GCLOUD_REGISTRY/$IMAGE:latest
 fi
